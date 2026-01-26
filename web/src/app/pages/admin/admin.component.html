@@ -1,0 +1,19 @@
+<div class="flex w-full h-screen relative overflow-hidden">
+  @if (!isCompact() && sidenavPinnedOpen()) {
+    <app-vertical></app-vertical>
+  }
+
+  @if (isCompact() && sidenavOverlayOpen()) {
+    <div class="fixed inset-0 z-40 bg-black/40" (click)="closeOverlaySidenav()"></div>
+    <div class="fixed inset-y-0 left-0 z-50 overflow-y-auto">
+      <app-vertical></app-vertical>
+    </div>
+  }
+
+  <div class="w-full min-w-0 flex flex-col h-full">
+    <app-horizontal (toggleSidenav)="toggleSidenav()"></app-horizontal>
+    <div class="flex-1 overflow-y-auto">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

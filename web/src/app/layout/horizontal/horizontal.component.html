@@ -1,0 +1,50 @@
+<div
+  class="w-full flex justify-between items-center p-2 border-b border-gray-200 max-h-15"
+>
+  <div class="flex items-center gap-4 min-w-0">
+    <button
+      tuiIconButton
+      size="s"
+      appearance="flat"
+      (click)="onToggleSidenav()"
+    >
+      <lucide-angular [img]="menu"></lucide-angular>
+    </button>
+  </div>
+
+  <div class="flex items-center gap-2">
+    <button size="s" appearance="outline" tuiIconButton (click)="toggleTheme()">
+      <lucide-angular [img]="theme === 'light' ? Sun : Moon"></lucide-angular>
+    </button>
+
+    <button
+      size="s"
+      appearance="positive"
+      tuiButton
+      (click)="open.set(!open())"
+    >
+      <lucide-angular color="#7BFA6A" [img]="user"></lucide-angular>
+      {{ this.currentUser?.name | titlecase }}
+    </button>
+  </div>
+</div>
+
+<tui-drawer                                                                                 *tuiPopup="open()">
+  <header>
+    <div tuiTitle>
+      <span tuiCaption>Caption・caption</span>
+      <div class="flex items-center gap-2">
+        <tui-avatar size="m" [src]="this.currentUser?.name! | initials" />
+        <span class="text-lg font-medium">
+          {{ this.currentUser?.name | titlecase }}
+          <tui-badge>Label</tui-badge>
+        </span>
+      </div>
+
+      <span tuiSubtitle>
+        In publishing and graphic design, Lorem ipsum is a placeholder text
+        commonly used.
+      </span>
+    </div>
+  </header>
+</tui-drawer>

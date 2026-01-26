@@ -1,0 +1,13 @@
+header {
+    position: absolute; /* Mudança chave: Absolute permite que o conteúdo suba */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 50; /* Garante que fique na frente da imagem */
+    background-color: transparent; /* Importante para ver a imagem atrás */
+}
+
+.with-bg {
+    background-color: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(6px);
+}

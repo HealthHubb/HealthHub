@@ -1,0 +1,66 @@
+<div
+  class="h-full min-[1200px]:w-72 max-[1199px]:w-[80vw] max-[1199px]:max-w-x overflow-y-auto bg-[var(--tui-background-base-alt)]"
+>
+  <div class="flex flex-col justify-between h-full">
+    <div class="flex flex-col gap-3 justify-center items-center">
+      <div class="py-5">
+        <img
+          [src]="'assets/Logo2-' + theme + '.png'"
+          alt="Clik Help Logo"
+          class="w-25 h-20 mb-5"
+        />
+      </div>
+      <div
+        class="flex px-2 w-full cursor-pointer transition duration-300 items-center"
+        routerLink="dashboard"
+        [ngClass]="{ 'border-r-4 border-[#5820CE] px-1': selectedRoute === '/dashboard' }"
+      >
+        <div class="flex w-full justify-between px-7 mx-5 items-center border-b p-2 border-[var(--tui-text-primary)]">
+          <div class="font-medium text-lg">Home</div>
+          <lucide-angular [img]="house"></lucide-angular>
+        </div>
+      </div>
+
+      <div
+        class="flex px-2 w-full cursor-pointer transition duration-300 items-center"
+        routerLink="workouts"
+        [ngClass]="{ 'border-r border-[#5820CE]': selectedRoute === '/workouts' }"
+      >
+        <div class="flex w-full justify-between px-7 mx-5 items-center border-b p-2 border-[var(--tui-text-primary)]">
+          <div class="font-medium text-lg">Workouts</div>
+          <lucide-angular [img]="dumbbell"></lucide-angular>
+        </div>
+      </div>
+      <div
+        class="flex px-2 w-full cursor-pointer transition duration-300 items-center"
+        routerLink="recipes"
+        [ngClass]="{ 'border-r border-[#5820CE]': selectedRoute === '/recipes' }"
+      >
+        <div class="flex w-full justify-between px-7 mx-5 items-center border-b p-2 border-[var(--tui-text-primary)]">
+          <div class="font-medium text-lg">Recipes</div>
+          <lucide-angular [img]="chefHat"></lucide-angular>
+        </div>
+      </div>
+
+      <div
+        class="flex px-2 w-full cursor-pointer transition duration-300 items-center"
+        routerLink="profile"
+        [ngClass]="{ 'border-r border-[#5820CE]': selectedRoute === '/profile' }"
+      >
+        <div class="flex w-full justify-between px-7 mx-5 items-center border-b p-2 border-[var(--tui-text-primary)]">
+          <div class="font-medium text-lg">Profile</div>
+          <lucide-angular [img]="user"></lucide-angular>
+        </div>
+      </div>
+    </div> 
+    <div class="p-5">
+      <div
+        (click)="logout()"
+        class="p-2 border border-[var(--tui-text-primary)] rounded-lg text-red-500 hover:bg-red-500/20 font-semibold cursor-pointer px-3 justify-between flex items-center"
+      >
+        Sair
+        <lucide-angular [img]="logOut"></lucide-angular>
+      </div>
+    </div>
+  </div>
+</div>
