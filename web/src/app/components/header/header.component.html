@@ -45,6 +45,18 @@
       >
         workout
       </button>
+      <button
+        [routerLink]="'/landing/plans'"
+        size="s"
+        appearance="secondary"
+        tuiButton
+        type="button"
+        [tuiAppearanceMode]="
+          isActive('/landing/plans') ? 'checked' : 'secondary'
+        "
+      >
+        plans
+      </button>
     </div>
 
     <div class="gap-2 flex">

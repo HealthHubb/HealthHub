@@ -1,84 +1,360 @@
-<div class="flex flex-col gap-20">
-  <div class="p-10 px-30 flex justify-between items-center gap-2">
-    <div class="max-w-lg z-10 pt-32">
-      <h1 class="text-3xl font-bold mb-6">
-        Your Journey to a Healthier Life Starts Here
-      </h1>
-      <p class="text-lg mb-8">
-        Discover personalized workout plans, nutritious recipes, and expert tips
-        to help you achieve your fitness goals.
-      </p>
-      <button [routerLink]="'/register'" size="m" appearance="primary" tuiButton type="button">
-        Get Started
-      </button>
-    </div>
-    <img
-      src="assets/landing-photo.jpg"
-      alt="Corredor"
-      class="hidden min-[1000px]:block absolute right-0 top-0 z-0 h-[70vh] w-1/2 object-cover [mask-image:linear-gradient(to_right,transparent_0%,transparent_2%,white_30%),linear-gradient(to_bottom,white_70%,transparent_90%)] [mask-composite:intersect]"
-    />
-  </div>
-  <div class="mt-10">
-    <h2 class="text-2xl font-bold mb-4 text-center">Features</h2>
-    <div class="features-grid grid grid-cols-3 gap-6 px-20">
-      <div
-        class="feature-card p-6 border border-[#7BFA6A] rounded-lg text-center"
+<div class="min-h-screen bg-[#0e0e0e] text-white">
+  <section class="relative overflow-hidden px-6 pb-20 pt-36 sm:px-10 lg:px-16">
+    <div
+      class="pointer-events-none absolute left-1/2 top-14 h-96 w-96 -translate-x-1/2 rounded-full bg-[radial-gradient(circle,_rgba(142,255,113,0.16)_0%,_rgba(142,255,113,0)_68%)] blur-3xl"
+    ></div>
+
+    <div class="mx-auto flex max-w-6xl flex-col items-center text-center">
+      <h1
+        class="max-w-4xl text-5xl font-black leading-tight tracking-[-0.04em] sm:text-6xl lg:text-7xl"
       >
-        <h3 class="text-xl font-semibold mb-2">Personalized Workouts</h3>
-        <p>Tailored workout plans to fit your fitness level and goals.</p>
+        Alcance Seu Ponto
+        <span class="block text-[#8eff71]">Máximo de Saúde</span>
+      </h1>
+
+      <p class="mt-6 max-w-2xl text-lg text-[#adaaaa] sm:text-2xl">
+        Integre treinos, nutrição e metas em um único painel.
+      </p>
+
+      <a
+        [routerLink]="'/register'"
+        class="mt-10 inline-flex items-center gap-2 rounded-full bg-[#8eff71] px-8 py-4 text-base font-semibold text-[#064200] transition hover:brightness-105"
+      >
+        Começar Agora
+        <span aria-hidden="true">+</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="px-6 py-16 sm:px-10 lg:px-16">
+    <div class="mx-auto max-w-6xl">
+      <h2 class="text-3xl font-bold">Ferramentas de Elite</h2>
+
+      <div class="mt-8 grid gap-6 lg:grid-cols-3">
+        <article
+          *ngFor="let card of featureCards"
+          class="relative overflow-hidden rounded-xl border border-white/5 bg-[#1a1919] p-8"
+        >
+          <div
+            class="absolute -right-4 -top-4 h-24 w-24 rounded-full blur-2xl"
+            [style.background]="card.glow"
+          ></div>
+
+          <div>
+            <lucide-angular
+              [img]="card.icon"
+              [color]="card.accent"
+              [size]="32"
+            ></lucide-angular>
+          </div>
+
+          <h3
+            class="relative mt-6 text-2xl font-bold"
+            [style.color]="card.accent"
+          >
+            {{ card.title }}
+          </h3>
+
+          <p class="relative mt-4 text-sm leading-7 text-[#adaaaa]">
+            {{ card.description }}
+          </p>
+        </article>
       </div>
+    </div>
+  </section>
+
+  <section class="px-6 py-20 sm:px-10 lg:px-16">
+    <div class="mx-auto max-w-6xl">
       <div
-        class="rounded-lg p-[1px] bg-gradient-to-r from-[#7BFA6A] to-[#5821C3]"
+        class="relative overflow-hidden rounded-[2rem] border border-white/5 bg-[#17151f] px-6 py-16 shadow-[0_0_50px_rgba(183,133,255,0.05)] sm:px-10"
       >
         <div
-          class="feature-card p-6 rounded-lg text-center text-black h-full w-full"
+          class="pointer-events-none absolute inset-x-12 top-0 h-44 rounded-full bg-[linear-gradient(90deg,rgba(183,133,255,0.05),rgba(183,133,255,0))] blur-3xl"
+        ></div>
+
+        <div class="relative text-center">
+          <h2 class="text-3xl font-bold sm:text-4xl">Seu Comando Central</h2>
+          <p class="mt-4 text-lg text-[#adaaaa]">
+            Métricas cruciais sempre à vista.
+          </p>
+        </div>
+
+        <div
+          class="relative mt-12 rounded-[2rem] border border-white/5 bg-[#201f1f] p-6 sm:p-8"
         >
-          <h3 class="text-xl font-semibold mb-2">Healthy Recipes</h3>
-          <p>Delicious and nutritious recipes to fuel your body.</p>
+          <div class="grid gap-4 lg:grid-cols-4">
+            <article class="rounded-xl border border-white/5 bg-[#262626] p-6">
+              <div
+                class="flex items-center justify-between text-sm text-[#adaaaa]"
+              >
+                <span>Passos Hoje</span>
+
+                <lucide-angular
+                  [img]="steps"
+                  [color]="'#8eff71'"
+                  [size]="16"
+                ></lucide-angular>
+              </div>
+              <p
+                class="mt-4 text-4xl font-black text-[#8eff71] [text-shadow:0_0_20px_rgba(142,255,113,0.3)]"
+              >
+                8.725
+              </p>
+              <div class="mt-5 h-2 rounded-full bg-black">
+                <div class="h-full w-[70%] rounded-full bg-[#8eff71]"></div>
+              </div>
+            </article>
+
+            <article class="rounded-xl border border-white/5 bg-[#262626] p-6">
+              <div
+                class="flex items-center justify-between text-sm text-[#adaaaa]"
+              >
+                <span>Calorias Ativas</span>
+                <lucide-angular
+                  [img]="flame"
+                  [color]="'#b785ff'"
+                  [size]="16"
+                ></lucide-angular>
+              </div>
+              <p class="mt-4 text-4xl font-black text-[#b785ff]">700</p>
+              <div class="mt-5 h-2 rounded-full bg-black">
+                <div class="h-full w-[85%] rounded-full bg-[#b785ff]"></div>
+              </div>
+            </article>
+
+            <article
+              class="relative overflow-hidden rounded-xl border border-white/5 bg-[#262626] p-6 lg:col-span-2"
+            >
+              <div
+                class="pointer-events-none absolute inset-x-0 bottom-0 top-1/2 bg-gradient-to-t from-[rgba(136,246,255,0.2)] to-transparent opacity-50"
+              ></div>
+
+              <div
+                class="relative flex items-center justify-between text-sm text-[#adaaaa]"
+              >
+                <span>Intensidade do Treino</span>
+                <lucide-angular
+                  [img]="zap"
+                  [color]="'#88f6ff'"
+                  [size]="16"
+                ></lucide-angular>
+              </div>
+              <p class="relative mt-4 text-4xl font-black">Alta</p>
+              <p class="relative mt-1 text-xs text-[#adaaaa]">
+                Pico de 165 BPM
+              </p>
+
+              <div class="relative mt-6 flex h-24 items-end gap-1">
+                <div
+                  *ngFor="let bar of dashboardBars"
+                  class="flex-1 rounded-t-sm bg-[#88f6ff]/80"
+                  [ngClass]="bar"
+                ></div>
+              </div>
+            </article>
+          </div>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div
-        class="feature-card p-6 border border-[#5821C3] rounded-lg text-center"
-      >
-        <h3 class="text-xl font-semibold mb-2">Expert Tips</h3>
-        <p>Advice from fitness and nutrition experts to keep you motivated.</p>
+  <section class="px-6 py-16 sm:px-10 lg:px-16">
+    <div class="mx-auto max-w-6xl">
+      <div class="flex items-end justify-between gap-4">
+        <div>
+          <h2 class="text-3xl font-bold">Conecte-se com Profissionais</h2>
+          <p class="mt-2 text-base text-[#adaaaa]">
+            Acesso direto a especialistas para otimizar seus resultados.
+          </p>
+        </div>
+
+        <a
+          [routerLink]="'/register'"
+          class="text-sm font-semibold text-[#b785ff] flex items-center gap-2"
+        >
+          Ver todos 
+          <lucide-angular
+            [img]="arrow_right"
+            [color]="'#b785ff'"
+            [size]="16"
+          ></lucide-angular> 
+        </a>
+      </div>
+
+      <div class="mt-10 grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
+        <article
+          *ngFor="let professional of professionals"
+          class="rounded-xl border border-white/5 bg-[#1a1919] p-6 text-center"
+        >
+          <img
+            [src]="professional.imageUrl"
+            [alt]="professional.name"
+            class="mx-auto h-20 w-20 rounded-full border-2 border-[#262626] object-cover"
+          />
+
+          <h3 class="mt-4 text-xl font-bold">{{ professional.name }}</h3>
+          <p class="mt-1 text-xs" [style.color]="professional.accent">
+            {{ professional.specialty }}
+          </p>
+
+          <a
+            [routerLink]="'/register'"
+            class="mt-6 inline-flex w-full items-center justify-center rounded-full border px-4 py-2 text-sm font-semibold text-[#b785ff]"
+            [style.borderColor]="'#b785ff'"
+          >
+            Conectar
+          </a>
+        </article>
       </div>
     </div>
-  </div>
-  <div
-    class="grid grid-cols-1 lg:grid-cols-12 items-center w-full max-w-6xl mx-auto px-4 py-10"
+  </section>
+
+  <section class="px-6 py-20 sm:px-10 lg:px-16">
+    <div class="mx-auto max-w-6xl">
+      <div class="text-center">
+        <h2 class="text-3xl font-bold sm:text-4xl">
+          O Que Dizem Nossos Atletas
+        </h2>
+        <p class="mt-4 text-lg text-[#adaaaa]">
+          Resultados reais de quem já alcançou o ponto máximo.
+        </p>
+      </div>
+
+      <div class="mt-12 grid gap-6 lg:grid-cols-4">
+        <article
+          *ngFor="let item of testimonials | slice : 0 : 2"
+          class="relative overflow-hidden rounded-2xl border border-white/5 bg-[#1a1919] p-8 lg:col-span-2"
+        >
+          <div class="flex gap-1 text-[#39ff14]">
+            <span *ngFor="let star of stars">★</span>
+          </div>
+
+          <p class="mt-6 text-lg italic leading-8 text-[#adaaaa]">
+            "{{ item.quote }}"
+          </p>
+
+          <div class="mt-8 flex items-center justify-between gap-4">
+            <div class="flex items-center gap-4">
+              <img
+                [src]="item.imageUrl"
+                [alt]="item.author"
+                class="h-14 w-14 rounded-full border-2 object-cover"
+                [style.borderColor]="item.accent"
+              />
+              <div>
+                <p class="font-bold">{{ item.author }}</p>
+                <p class="text-sm text-[#7800e8]">{{ item.role }}</p>
+              </div>
+            </div>
+
+            <span
+              class="rounded-full border px-4 py-2 text-sm font-semibold"
+              [style.background]="item.accentBg"
+              [style.borderColor]="item.accent"
+              [style.color]="item.accent"
+            >
+              {{ item.badge }}
+            </span>
+          </div>
+        </article>
+
+        <article
+          class="relative overflow-hidden rounded-2xl border border-white/5 bg-[#1a1919] p-8 lg:col-span-4"
+        >
+          <div
+            class="pointer-events-none absolute right-24 top-[-5rem] h-64 w-72 rounded-full bg-[linear-gradient(90deg,rgba(57,255,20,0.05),rgba(120,0,232,0.1))] blur-3xl"
+          ></div>
+
+          <div class="relative grid gap-8 xl:grid-cols-[1fr_220px]">
+            <div>
+              <div class="flex gap-1 text-[#39ff14]">
+                <span *ngFor="let star of stars">★</span>
+              </div>
+
+              <p
+                class="mt-6 text-lg italic leading-8 text-[#adaaaa] sm:text-xl"
+              >
+                "{{ testimonials[2].quote }}"
+              </p>
+
+              <div class="mt-8 flex items-center gap-4">
+                <img
+                  [src]="testimonials[2].imageUrl"
+                  [alt]="testimonials[2].author"
+                  class="h-16 w-16 rounded-full border-2 object-cover shadow-[0_0_15px_rgba(57,255,20,0.3)]"
+                  [style.borderColor]="'#39FF14'"
+                />
+                <div>
+                  <p class="text-xl font-bold">{{ testimonials[2].author }}</p>
+                  <p class="text-sm text-[#7800e8]">
+                    {{ testimonials[2].role }}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <aside
+              class="relative rounded-xl border border-white/5 bg-[#1a1919] p-6 text-center"
+            >
+              <p class="text-xs uppercase tracking-[0.2em] text-[#adaaaa]">
+                Desempenho Geral
+              </p>
+              <p
+                class="mt-4 text-5xl font-bold text-[#39ff14] [text-shadow:0_0_10px_rgba(57,255,20,0.4)]"
+              >
+                +45%
+              </p>
+              <p class="mt-2 text-sm font-semibold text-[#7800e8]">
+                Em 6 meses
+              </p>
+            </aside>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="px-6 py-20 sm:px-10 lg:px-16">
+    <div class="mx-auto max-w-4xl">
+      <div
+        class="relative overflow-hidden rounded-xl border border-white/5 bg-[#201f1f] px-8 py-12 text-center"
+      >
+        <div
+          class="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(142,255,113,0.1),rgba(142,255,113,0),rgba(183,133,255,0.1))] opacity-30"
+        ></div>
+
+        <div class="relative">
+          <h2 class="text-3xl font-black sm:text-4xl">
+            Pronto para sua melhor versão?
+          </h2>
+
+          <a
+            [routerLink]="'/register'"
+            class="mt-8 inline-flex rounded-full bg-[#8eff71] px-10 py-4 text-base font-semibold text-[#064200] transition hover:brightness-105"
+          >
+            Inscreva-se Grátis
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer
+    class="border-t border-[#8eff71]/10 px-6 pb-12 pt-10 sm:px-10 lg:px-16"
   >
     <div
-      class="lg:col-span-7 lg:col-start-1 bg-[#5DC350]/80 rounded-3xl p-10 flex flex-col sm:flex-row items-center gap-8 shadow-lg z-0"
+      class="mx-auto flex max-w-6xl flex-col gap-6 text-sm text-[#adaaaa] md:flex-row md:items-center md:justify-between"
     >
-      <img
-        src="assets/foto-bloco1.png"
-        alt=""
-        class="w-30 h-[180px] object-contain shrink-0"
-      />
-      <div class="flex-1">
-        <p class="text-white text-lg font-medium leading-relaxed">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae
-          voluptatem cumque exercitationem magni fugit distinctio.
-        </p>
-      </div>
-    </div>
+      <div class="font-semibold text-[#8eff71]">HealthHub</div>
 
-    <div
-      class="lg:col-span-7 lg:col-start-6 lg:-mt-24 bg-[#5821C3]/80 rounded-3xl p-10 flex flex-col sm:flex-row items-center gap-8 shadow-2xl z-10 relative"
-    >
-      <div class="flex-1">
-        <p class="text-white text-lg font-medium leading-relaxed">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae
-          voluptatem cumque exercitationem magni fugit distinctio.
-        </p>
+      <div class="flex flex-wrap gap-6">
+        <span>Privacidade</span>
+        <span>Termos</span>
+        <span>Suporte</span>
+        <span>Contato</span>
       </div>
-      <img
-        src="assets/foto-bloco2.png"
-        alt=""
-        class="w-40 h-auto object-contain shrink-0"
-      />
+
+      <div>© 2024 HealthHub. Alcance seu ponto máximo.</div>
     </div>
-  </div>
+  </footer>
 </div>

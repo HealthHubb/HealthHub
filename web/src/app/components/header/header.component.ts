@@ -48,7 +48,9 @@ export class HeaderComponent implements OnInit {
   updateHeaderBg(url: string): void {
     const lower = url.toLowerCase();
     this.hasBg =
-      lower.includes('/landing/workout') || lower.includes('/landing/recipes');
+      lower.includes('/landing/workout') ||
+      lower.includes('/landing/recipes') ||
+      lower.includes('/landing/plans');
   }
 
   isActive(path: string): boolean {

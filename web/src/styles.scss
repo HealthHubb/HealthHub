@@ -1,3 +1,496 @@
 @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; 
+
+// ============================================================
+// HealthHub – Design System Tokens
+// style.scss (root)
+//
+// Estrutura:
+//   1. Google Fonts imports
+//   2. Paleta de cores brutas (Sass variables)
+//   3. CSS Custom Properties – tema claro (:root)
+//   4. CSS Custom Properties – tema escuro ([data-theme="dark"])
+//   5. Reset & base
+//   6. Tipografia
+//   7. Espaçamento
+//   8. Utilitários de cor
+// ============================================================
+
+// ------------------------------------------------------------
+// 1. Fontes
+// ------------------------------------------------------------
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+
+// ------------------------------------------------------------
+// 2. Paleta bruta (Sass – não use diretamente nos componentes;
+//    prefira as CSS vars semânticas abaixo)
+// ------------------------------------------------------------
+
+// Primary
+$color-green-primary   : #7BFA6A;
+$color-purple-primary  : #5820CE;
+$color-white           : #FFFFFF;
+
+// Green scale
+$color-green-900       : #19D400;
+$color-green-700       : #39FD59;
+$color-green-500       : #7BFA6A;   // alias primary
+$color-green-300       : #9BFF8E;
+$color-green-200       : #A7FF9C;
+
+// Purple scale
+$color-purple-900      : #3E0F98;
+$color-purple-700      : #5820CE;   // alias primary
+$color-purple-600      : #6B23F9;
+$color-purple-400      : #7E53D2;
+$color-purple-300      : #896FBC;
+
+// Accent / Warning
+$color-yellow-accent   : #D5F923;
+$color-red-warning     : #FF6B6B;
+
+// Gray scale
+$color-gray-700        : #7D7D7D;
+$color-gray-500        : #9F9F9F;
+$color-gray-300        : #BABABA;
+$color-gray-100        : #D5D5D5;
+
+// Surfaces (dark theme)
+$color-surface-dark-900: #0D0D14;
+$color-surface-dark-800: #13131E;
+$color-surface-dark-700: #1A1A2E;
+$color-surface-dark-600: #22223A;
+
+// Surfaces (light theme)
+$color-surface-light-50 : #F4F4FF;
+$color-surface-light-100: #EAEAF8;
+$color-surface-light-200: #DCDCF0;
+
+
+// ------------------------------------------------------------
+// 3. CSS Custom Properties – Tema Claro (:root)
+// ------------------------------------------------------------
+:root {
+  // --- Brand ---
+  --color-brand-primary      : #{$color-purple-primary};
+  --color-brand-primary-dark : #{$color-purple-900};
+  --color-brand-primary-light: #{$color-purple-300};
+
+  --color-brand-accent       : #{$color-green-primary};
+  --color-brand-accent-dark  : #{$color-green-900};
+  --color-brand-accent-light : #{$color-green-200};
+
+  --color-brand-yellow       : #{$color-yellow-accent};
+
+  // --- Feedback ---
+  --color-success            : #{$color-green-900};
+  --color-success-bg         : #EDFCED;
+  --color-error              : #{$color-red-warning};
+  --color-error-bg           : #FFF0F0;
+  --color-warning            : #F5A623;
+  --color-warning-bg         : #FFF8EC;
+  --color-info               : #{$color-purple-600};
+  --color-info-bg            : #F0EEFF;
+
+  // --- Superfícies / Background ---
+  --color-bg-page            : #{$color-surface-light-50};
+  --color-bg-card            : #{$color-white};
+  --color-bg-elevated        : #{$color-surface-light-100};
+  --color-bg-overlay         : rgba(88, 32, 206, 0.06);
+
+  // --- Bordas ---
+  --color-border             : #{$color-gray-100};
+  --color-border-strong      : #{$color-gray-300};
+  --color-border-focus       : #{$color-purple-primary};
+
+  // --- Texto ---
+  --color-text-primary       : #1A1A2E;
+  --color-text-secondary     : #{$color-gray-700};
+  --color-text-placeholder   : #{$color-gray-500};
+  --color-text-disabled      : #{$color-gray-300};
+  --color-text-inverse       : #{$color-white};
+  --color-text-on-brand      : #{$color-white};
+  --color-text-link          : #{$color-purple-primary};
+  --color-text-link-hover    : #{$color-purple-900};
+
+  // --- Componentes: Button ---
+  --btn-bg-solid             : #{$color-purple-primary};
+  --btn-bg-solid-hover       : #{$color-purple-900};
+  --btn-bg-solid-pressed     : #{$color-purple-600};
+  --btn-bg-solid-disabled    : #{$color-gray-100};
+  --btn-text-solid           : #{$color-white};
+  --btn-text-disabled        : #{$color-gray-500};
+
+  --btn-border-outline       : #{$color-purple-primary};
+  --btn-text-outline         : #{$color-purple-primary};
+  --btn-bg-outline-hover     : rgba(88, 32, 206, 0.08);
+
+  // --- Componentes: Input ---
+  --input-bg                 : #{$color-white};
+  --input-bg-disabled        : #{$color-surface-light-200};
+  --input-border             : #{$color-gray-300};
+  --input-border-hover       : #{$color-purple-300};
+  --input-border-focus       : #{$color-purple-primary};
+  --input-border-success     : #{$color-green-900};
+  --input-border-error       : #{$color-red-warning};
+  --input-border-warning     : #F5A623;
+  --input-text               : #1A1A2E;
+  --input-placeholder        : #{$color-gray-500};
+
+  // --- Componentes: Tabs ---
+  --tab-text-default         : #{$color-gray-700};
+  --tab-text-selected        : #{$color-purple-primary};
+  --tab-indicator            : #{$color-purple-primary};
+  --tab-bg-hover             : rgba(88, 32, 206, 0.06);
+
+  // --- Componentes: Badge ---
+  --badge-bg-success         : #{$color-green-200};
+  --badge-text-success       : #{$color-green-900};
+  --badge-bg-error           : #FFE0E0;
+  --badge-text-error         : #C0392B;
+  --badge-bg-warning         : #FFF3CD;
+  --badge-text-warning       : #856404;
+  --badge-bg-info            : #E8E0FF;
+  --badge-text-info          : #{$color-purple-900};
+
+  // --- Componentes: Toggle / Checkbox / Radio ---
+  --toggle-bg-off            : #{$color-gray-300};
+  --toggle-bg-on             : #{$color-purple-primary};
+  --toggle-bg-on-hover       : #{$color-purple-900};
+  --toggle-knob              : #{$color-white};
+
+  // --- Componentes: Slider ---
+  --slider-track             : #{$color-gray-100};
+  --slider-fill              : #{$color-purple-primary};
+  --slider-thumb             : #{$color-purple-primary};
+  --slider-thumb-hover       : #{$color-purple-900};
+
+  // --- Componentes: Avatar ---
+  --avatar-bg-default        : #{$color-purple-300};
+  --avatar-text              : #{$color-white};
+  --avatar-online-indicator  : #{$color-green-900};
+  --avatar-offline-indicator : #{$color-gray-300};
+
+  // --- Sombras ---
+  --shadow-sm    : 0 1px 3px rgba(88, 32, 206, 0.08);
+  --shadow-md    : 0 4px 12px rgba(88, 32, 206, 0.12);
+  --shadow-lg    : 0 8px 24px rgba(88, 32, 206, 0.16);
+  --shadow-focus : 0 0 0 3px rgba(88, 32, 206, 0.25);
+
+  // --- Bordas arredondadas ---
+  --radius-xs    : 4px;
+  --radius-sm    : 6px;
+  --radius-md    : 8px;
+  --radius-lg    : 12px;
+  --radius-xl    : 16px;
+  --radius-full  : 9999px;
+
+  // --- Transições ---
+  --transition-fast  : 120ms ease;
+  --transition-base  : 200ms ease;
+  --transition-slow  : 350ms ease;
+
+  // --- Z-index ---
+  --z-base      : 0;
+  --z-raised    : 10;
+  --z-dropdown  : 100;
+  --z-modal     : 200;
+  --z-toast     : 300;
+  --z-tooltip   : 400;
+}
+
+
+// ------------------------------------------------------------
+// 4. CSS Custom Properties – Tema Escuro
+//    Aplique [data-theme="dark"] no <html> ou <body>
+// ------------------------------------------------------------
+[data-theme="dark"] {
+  // --- Brand (mantém os mesmos, apenas ajustamos superfícies) ---
+  --color-brand-primary      : #{$color-green-primary};   // destaque muda p/ verde no dark
+  --color-brand-primary-dark : #{$color-green-900};
+  --color-brand-primary-light: #{$color-green-200};
+
+  --color-brand-accent       : #{$color-purple-600};
+  --color-brand-accent-dark  : #{$color-purple-primary};
+  --color-brand-accent-light : #{$color-purple-300};
+
+  --color-brand-yellow       : #{$color-yellow-accent};
+
+  // --- Feedback ---
+  --color-success            : #{$color-green-300};
+  --color-success-bg         : rgba(57, 253, 89, 0.12);
+  --color-error              : #FF8A8A;
+  --color-error-bg           : rgba(255, 107, 107, 0.12);
+  --color-warning            : #FFD166;
+  --color-warning-bg         : rgba(255, 209, 102, 0.12);
+  --color-info               : #{$color-purple-300};
+  --color-info-bg            : rgba(107, 35, 249, 0.15);
+
+  // --- Superfícies / Background ---
+  --color-bg-page            : #{$color-surface-dark-900};
+  --color-bg-card            : #{$color-surface-dark-800};
+  --color-bg-elevated        : #{$color-surface-dark-700};
+  --color-bg-overlay         : rgba(123, 250, 106, 0.06);
+
+  // --- Bordas ---
+  --color-border             : #{$color-surface-dark-600};
+  --color-border-strong      : #3A3A5C;
+  --color-border-focus       : #{$color-green-primary};
+
+  // --- Texto ---
+  --color-text-primary       : #F0F0FF;
+  --color-text-secondary     : #{$color-gray-300};
+  --color-text-placeholder   : #{$color-gray-500};
+  --color-text-disabled      : #3A3A5C;
+  --color-text-inverse       : #1A1A2E;
+  --color-text-on-brand      : #1A1A2E;
+  --color-text-link          : #{$color-green-primary};
+  --color-text-link-hover    : #{$color-green-300};
+
+  // --- Componentes: Button ---
+  --btn-bg-solid             : #{$color-green-primary};
+  --btn-bg-solid-hover       : #{$color-green-300};
+  --btn-bg-solid-pressed     : #{$color-green-900};
+  --btn-bg-solid-disabled    : #{$color-surface-dark-600};
+  --btn-text-solid           : #1A1A2E;
+  --btn-text-disabled        : #3A3A5C;
+
+  --btn-border-outline       : #{$color-green-primary};
+  --btn-text-outline         : #{$color-green-primary};
+  --btn-bg-outline-hover     : rgba(123, 250, 106, 0.1);
+
+  // --- Componentes: Input ---
+  --input-bg                 : #{$color-surface-dark-800};
+  --input-bg-disabled        : #{$color-surface-dark-700};
+  --input-border             : #{$color-surface-dark-600};
+  --input-border-hover       : #{$color-purple-300};
+  --input-border-focus       : #{$color-green-primary};
+  --input-border-success     : #{$color-green-300};
+  --input-border-error       : #FF8A8A;
+  --input-border-warning     : #FFD166;
+  --input-text               : #F0F0FF;
+  --input-placeholder        : #{$color-gray-700};
+
+  // --- Componentes: Tabs ---
+  --tab-text-default         : #{$color-gray-500};
+  --tab-text-selected        : #{$color-green-primary};
+  --tab-indicator            : #{$color-green-primary};
+  --tab-bg-hover             : rgba(123, 250, 106, 0.06);
+
+  // --- Componentes: Badge ---
+  --badge-bg-success         : rgba(57, 253, 89, 0.15);
+  --badge-text-success       : #{$color-green-300};
+  --badge-bg-error           : rgba(255, 107, 107, 0.15);
+  --badge-text-error         : #FF8A8A;
+  --badge-bg-warning         : rgba(255, 209, 102, 0.15);
+  --badge-text-warning       : #FFD166;
+  --badge-bg-info            : rgba(107, 35, 249, 0.2);
+  --badge-text-info          : #{$color-purple-300};
+
+  // --- Componentes: Toggle / Checkbox / Radio ---
+  --toggle-bg-off            : #{$color-surface-dark-600};
+  --toggle-bg-on             : #{$color-green-primary};
+  --toggle-bg-on-hover       : #{$color-green-300};
+  --toggle-knob              : #1A1A2E;
+
+  // --- Componentes: Slider ---
+  --slider-track             : #{$color-surface-dark-600};
+  --slider-fill              : #{$color-green-primary};
+  --slider-thumb             : #{$color-green-primary};
+  --slider-thumb-hover       : #{$color-green-300};
+
+  // --- Componentes: Avatar ---
+  --avatar-bg-default        : #{$color-purple-400};
+  --avatar-text              : #{$color-white};
+  --avatar-online-indicator  : #{$color-green-primary};
+  --avatar-offline-indicator : #{$color-surface-dark-600};
+
+  // --- Sombras ---
+  --shadow-sm    : 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md    : 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-lg    : 0 8px 24px rgba(0, 0, 0, 0.6);
+  --shadow-focus : 0 0 0 3px rgba(123, 250, 106, 0.3);
+}
+
+
+// ------------------------------------------------------------
+// 5. Reset & Base
+// ------------------------------------------------------------
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color : var(--color-bg-page);
+  color            : var(--color-text-primary);
+  font-family      : 'Inter', system-ui, sans-serif;
+  font-size        : 0.75rem; // 12px – Body 1
+  font-weight      : 400;
+  line-height      : 1.5;
+  transition       : background-color var(--transition-base),
+                     color var(--transition-base);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color           : var(--color-text-link);
+  text-decoration : none;
+  transition      : color var(--transition-fast);
+
+  &:hover { color: var(--color-text-link-hover); }
+}
+
+img, svg, video {
+  display   : block;
+  max-width : 100%;
+}
+
+button, input, select, textarea {
+  font-family : inherit;
+  font-size   : inherit;
+}
+
+
+// ------------------------------------------------------------
+// 6. Tipografia
+//    Baseado na hierarquia do Design System
+// ------------------------------------------------------------
+
+// Sass map para gerar as classes automaticamente
+$type-scale: (
+  'h1': (font-family: 'Space Grotesk', weight: 700, size: 1.5rem,   lh: 1.2),   // 24px
+  'h2': (font-family: 'Space Grotesk', weight: 700, size: 1.25rem,  lh: 1.25),  // 20px
+  'h3': (font-family: 'Space Grotesk', weight: 700, size: 1rem,     lh: 1.3),   // 16px
+  'h4': (font-family: 'Space Grotesk', weight: 500, size: 0.9375rem,lh: 1.35),  // 15px
+  'h5': (font-family: 'Space Grotesk', weight: 500, size: 0.875rem, lh: 1.4),   // 14px
+  'h6': (font-family: 'Space Grotesk', weight: 500, size: 0.8125rem,lh: 1.4),   // 13px
+);
+
+// Estilos nativos de heading
+@each $tag, $props in $type-scale {
+  #{$tag},
+  .text-#{$tag} {
+    font-family  : map-get($props, font-family), system-ui, sans-serif;
+    font-weight  : map-get($props, weight);
+    font-size    : map-get($props, size);
+    line-height  : map-get($props, lh);
+    color        : var(--color-text-primary);
+    letter-spacing: -0.01em;
+  }
+}
+
+// Classes de body text
+.text-body-1 { font-size: 0.75rem;    font-weight: 400; line-height: 1.5; } // 12px
+.text-body-2 { font-size: 0.625rem;   font-weight: 400; line-height: 1.5; } // 10px
+.text-body-3 { font-size: 0.5rem;     font-weight: 400; line-height: 1.6; } // 8px
+.text-body-4 { font-size: 0.375rem;   font-weight: 300; line-height: 1.6; } // 6px
+.text-body-5 { font-size: 0.3125rem;  font-weight: 300; line-height: 1.6; } // 5px
+.text-body-6 { font-size: 0.25rem;    font-weight: 300; line-height: 1.6; } // 4px
+
+// Atalhos semânticos de cor de texto
+.text-primary     { color: var(--color-text-primary)     !important; }
+.text-secondary   { color: var(--color-text-secondary)   !important; }
+.text-placeholder { color: var(--color-text-placeholder) !important; }
+.text-disabled    { color: var(--color-text-disabled)    !important; }
+.text-inverse     { color: var(--color-text-inverse)     !important; }
+.text-brand       { color: var(--color-brand-primary)    !important; }
+.text-accent      { color: var(--color-brand-accent)     !important; }
+.text-success     { color: var(--color-success)          !important; }
+.text-error       { color: var(--color-error)            !important; }
+.text-warning     { color: var(--color-warning)          !important; }
+.text-info        { color: var(--color-info)             !important; }
+
+
+// ------------------------------------------------------------
+// 7. Espaçamento
+//    Baseado na escala do Design System: 4 8 12 16 24 32
+// ------------------------------------------------------------
+$spacing-scale: (
+  'xs' : 4px,
+  'sm' : 8px,
+  'md' : 12px,
+  'lg' : 16px,
+  'xl' : 24px,
+  '2xl': 32px,
+);
+
+// Variáveis CSS de espaçamento
+:root {
+  @each $name, $value in $spacing-scale {
+    --space-#{$name}: #{$value};
+  }
+}
+
+// Classes utilitárias de padding e margin (p-sm, mt-lg, etc.)
+$sides: (
+  ''  : '',
+  't' : 'top',
+  'b' : 'bottom',
+  'l' : 'left',
+  'r' : 'right',
+  'x' : ('left', 'right'),
+  'y' : ('top', 'bottom'),
+);
+
+@each $size-key, $size-val in $spacing-scale {
+  @each $side-key, $side-val in $sides {
+    .p#{if($side-key == '', '', '-')}#{$side-key}-#{$size-key} {
+      @if type-of($side-val) == 'list' {
+        @each $s in $side-val { padding-#{$s}: $size-val; }
+      } @else if $side-val == '' {
+        padding: $size-val;
+      } @else {
+        padding-#{$side-val}: $size-val;
+      }
+    }
+    .m#{if($side-key == '', '', '-')}#{$side-key}-#{$size-key} {
+      @if type-of($side-val) == 'list' {
+        @each $s in $side-val { margin-#{$s}: $size-val; }
+      } @else if $side-val == '' {
+        margin: $size-val;
+      } @else {
+        margin-#{$side-val}: $size-val;
+      }
+    }
+  }
+}
+
+// Gap utilitários
+@each $name, $value in $spacing-scale {
+  .gap-#{$name} { gap: $value; }
+}
+
+
+// ------------------------------------------------------------
+// 8. Utilitários de cor de fundo e borda
+// ------------------------------------------------------------
+.bg-page      { background-color: var(--color-bg-page)     !important; }
+.bg-card      { background-color: var(--color-bg-card)     !important; }
+.bg-elevated  { background-color: var(--color-bg-elevated) !important; }
+.bg-brand     { background-color: var(--color-brand-primary); color: var(--color-text-on-brand); }
+.bg-accent    { background-color: var(--color-brand-accent); color: var(--color-text-on-brand); }
+.bg-success   { background-color: var(--color-success-bg); color: var(--color-success); }
+.bg-error     { background-color: var(--color-error-bg);   color: var(--color-error);   }
+.bg-warning   { background-color: var(--color-warning-bg); color: var(--color-warning); }
+.bg-info      { background-color: var(--color-info-bg);    color: var(--color-info);    }
+
+.border       { border: 1px solid var(--color-border); }
+.border-strong{ border: 1px solid var(--color-border-strong); }
+.border-brand { border: 1px solid var(--color-brand-primary); }
+
+
+// ------------------------------------------------------------
+// FIM do arquivo
+// ============================================================

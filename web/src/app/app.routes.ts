@@ -3,6 +3,7 @@ import { LandingPageComponent } from './pages/landing-page/landing-page.componen
 import { LoginPageComponent } from './pages/auth/login-page/login-page.component';
 import { RegisterPageComponent } from './pages/auth/register-page/register-page.component';
 import { AboutComponent } from './pages/landing-page/about/about.component';
+import { PlansComponent } from './pages/landing-page/plans/plans.component';
 import { RecipesComponent } from './pages/landing-page/receips/recipes.component';
 import { WorkoutComponent } from './pages/landing-page/workout/workout.component';
 import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
@@ -19,6 +20,7 @@ export const routes: Routes = [
             { path: 'about', component: AboutComponent },
             { path: 'recipes', component: RecipesComponent },
             { path: 'workout', component: WorkoutComponent },
+            { path: 'plans', component: PlansComponent },
         ],
     },
     { path: 'login', component: LoginPageComponent },
