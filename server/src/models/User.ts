@@ -1,64 +1,61 @@
-import { Model, DataTypes } from 'sequelize';
-import sequelize from '../config/database.js';
+import { Table, Column, Model, DataType } from 'sequelize-typescript';
 
+@Table({
+    tableName: 'users',
+    timestamps: true
+})
 class User extends Model {
-    public id!: number;
-    public name!: string;
-    public email!: string;
-    public password!: string;
-    public phone?: string;
-    public address?: string;
-    public document?: string;
-    public role!: 'CLIENT' | 'PROFESSIONAL';
+    @Column({
+        type: DataType.INTEGER.UNSIGNED,
+        autoIncrement: true,
+        primaryKey: true,
+    })
+    declare id: number;
 
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
+    @Column({
+        type: DataType.STRING,
+        allowNull: false,
+    })
+    declare name: string;
+
+    @Column({
+        type: DataType.STRING,
+        allowNull: false,
+        unique: true,
+    })
+    declare email: string;
+
+    @Column({
+        type: DataType.STRING,
+        allowNull: false,
+    })
+    declare password: string;
+
+    @Column({
+        type: DataType.ENUM('CLIENT', 'PROFESSIONAL'),
+        allowNull: false,
+        defaultValue: 'CLIENT',
+    })
+    declare role: 'CLIENT' | 'PROFESSIONAL';
+
+    @Column({
+        type: DataType.STRING,
+        allowNull: true,
+    })
+    declare phone: string;
+
+    @Column({
+        type: DataType.STRING,
+        allowNull: true,
+    })
+    declare address: string;
+
+    @Column({
+        type: DataType.STRING,
+        allowNull: true,
+        unique: true,
+    })
+    declare document: string;
 }
 
-User.init(
-    {
-        id: {
-            type: DataTypes.INTEGER.UNSIGNED,
-            autoIncrement: true,
-            primaryKey: true,
-        },
-        name: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        email: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            unique: true,
-        },
-        password: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        role: {
-            type: DataTypes.ENUM('CLIENT', 'PROFESSIONAL'),
-            allowNull: false,
-            defaultValue: 'CLIENT',
-        },
-        phone: {
-            type: DataTypes.STRING,
-            allowNull: true,
-        },
-        address: {
-            type: DataTypes.STRING,
-            allowNull: true,
-        },
-        document: {
-            type: DataTypes.STRING,
-            allowNull: true,
-            unique: true,
-        },
-    },
-    {
-        sequelize,
-        tableName: 'users',
-    }
-);
-
 export default User;
-

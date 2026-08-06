@@ -1,64 +1,60 @@
-import { Model, DataTypes } from 'sequelize';
-import sequelize from '../config/database.js';
+import { Table, Column, Model, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
 import Exercise from './Exercise.js';
 import Workouts from './Workouts.js';
 
+@Table({
+    tableName: 'workout_routine',
+    timestamps: true
+})
 class WorkoutRoutine extends Model {
-    public id!: number;
-    public workoutId!: number;
-    public exerciseId!: number;
-    public sets!: number;
-    public reps!: number;
-    public restTime!: number;
- 
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
-}
+    @Column({
+        type: DataType.INTEGER.UNSIGNED,
+        autoIncrement: true,
+        primaryKey: true,
+    })
+    declare id: number;
 
-WorkoutRoutine.init(
-    {
-        id: {
-            type: DataTypes.INTEGER.UNSIGNED,
-            autoIncrement: true,
-            primaryKey: true,
-        },
-        workoutId: {
-            type: DataTypes.INTEGER.UNSIGNED,
-            allowNull: false,
-            references: {
-                model: Workouts,
-                key: 'id',
-            },
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
-        },
-        exerciseId: {
-            type: DataTypes.INTEGER.UNSIGNED,
-            allowNull: false,
-            references: {
-                model: Exercise,
-                key: 'id',
-            },
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
-        },
-        sets: {
-            type: DataTypes.INTEGER.UNSIGNED,
-            allowNull: false,
-        },
-        reps: {
-            type: DataTypes.INTEGER.UNSIGNED,
-            allowNull: false,
-        },
-        restTime: {
-            type: DataTypes.INTEGER.UNSIGNED,
-            allowNull: false,
-        },
-    },
-    {
-        sequelize,
-        tableName: 'workout_routine',
-    },
-);
+    @ForeignKey(() => Workouts)
+    @Column({
+        type: DataType.INTEGER.UNSIGNED,
+        allowNull: false,
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+    })
+    declare workoutId: number;
+
+    @BelongsTo(() => Workouts)
+    declare workout: Workouts;
+
+    @ForeignKey(() => Exercise)
+    @Column({
+        type: DataType.INTEGER.UNSIGNED,
+        allowNull: false,
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+    })
+    declare exerciseId: number;
+
+    @BelongsTo(() => Exercise)
+    declare exercise: Exercise;
+
+    @Column({
+        type: DataType.INTEGER.UNSIGNED,
+        allowNull: false,
+    })
+    declare sets: number;
+
+    @Column({
+        type: DataType.INTEGER.UNSIGNED,
+        allowNull: false,
+    })
+    declare reps: number;
+
+    @Column({
+        type: DataType.INTEGER.UNSIGNED,
+        allowNull: false,
+    })
+    declare restTime: number;
+}
 
 export default WorkoutRoutine;

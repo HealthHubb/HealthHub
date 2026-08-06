@@ -1,9 +1,16 @@
+import 'reflect-metadata';
 import Fastify from "fastify";
 import sequelize from "./config/database.js";
 import ClientProfile from "./models/ClientProfile.js";
 import ProfessionalProfile from "./models/ProfessionalProfile.js";
 import User from "./models/User.js";
 import Connection from "./models/Connection.js";
+import Diet from "./models/Diet.js";
+import Meals from "./models/Meals.js";
+import Exercise from "./models/Exercise.js";
+import Workouts from "./models/Workouts.js";
+import WorkoutRoutine from "./models/WorkoutRoutine.js";
+import WorkoutLogs from "./models/workoutLogs.js";
 import { userRoutes } from "./routes/userRoutes.js";
 
 const app = Fastify({
@@ -19,10 +26,20 @@ const start = async () => {
     await sequelize.authenticate();
     console.log("Database connection has been established successfully.");
 
-    await User.sync();
-    await ClientProfile.sync();
-    await ProfessionalProfile.sync();
-    await Connection.sync();
+    sequelize.addModels([
+      User, 
+      ClientProfile, 
+      ProfessionalProfile, 
+      Connection, 
+      Diet, 
+      Meals, 
+      Exercise, 
+      Workouts, 
+      WorkoutRoutine, 
+      WorkoutLogs
+    ]);
+
+    await sequelize.sync();
     console.log("Database & tables created!");
 
     await app.register(userRoutes);

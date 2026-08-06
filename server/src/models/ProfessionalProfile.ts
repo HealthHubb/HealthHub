@@ -1,51 +1,54 @@
-import { Model, DataTypes } from 'sequelize';
-import sequelize from '../config/database.js';
+import { Table, Column, Model, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
 import User from './User.js';
 
+@Table({
+    tableName: 'professional_profiles',
+    timestamps: true
+})
 class ProfessionalProfile extends Model {
-    public id!: number;
-    public userId!: number;
-    public certificate!: string;
-    public professionalType!: 'PERSONAL_TRAINER' | 'NUTRITIONIST';
-    public specialities!: string[];
-    public bio!: string;
-}
+    @Column({
+        type: DataType.INTEGER.UNSIGNED,
+        autoIncrement: true,
+        primaryKey: true,
+    })
+    declare id: number;
 
-ProfessionalProfile.init(
-    {
-        id: { type: DataTypes.INTEGER.UNSIGNED, autoIncrement: true, primaryKey: true },
-        userId: {
-            type: DataTypes.INTEGER.UNSIGNED,
-            allowNull: false,
-            references: {
-                model: User,
-                key: 'id',
-            },
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
-        },
-        certificate: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            unique: true,
-        },
-        professionalType: {
-            type: DataTypes.ENUM('PERSONAL_TRAINER', 'NUTRITIONIST'),
-            allowNull: false,
-        },
-        specialities: {
-            type: DataTypes.JSON,
-            allowNull: false,
-        },
-        bio: {
-            type: DataTypes.TEXT,
-            allowNull: false,
-        },
-    },
-    {
-        sequelize,
-        tableName: 'professional_profiles',
-    }   
-);
+    @ForeignKey(() => User)
+    @Column({
+        type: DataType.INTEGER.UNSIGNED,
+        allowNull: false,
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+    })
+    declare userId: number;
+
+    @BelongsTo(() => User)
+    declare user: User;
+
+    @Column({
+        type: DataType.STRING,
+        allowNull: false,
+        unique: true,
+    })
+    declare certificate: string;
+
+    @Column({
+        type: DataType.ENUM('PERSONAL_TRAINER', 'NUTRITIONIST'),
+        allowNull: false,
+    })
+    declare professionalType: 'PERSONAL_TRAINER' | 'NUTRITIONIST';
+
+    @Column({
+        type: DataType.JSON,
+        allowNull: false,
+    })
+    declare specialities: string[];
+
+    @Column({
+        type: DataType.TEXT,
+        allowNull: false,
+    })
+    declare bio: string;
+}
 
 export default ProfessionalProfile;

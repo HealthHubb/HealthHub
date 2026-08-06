@@ -1,50 +1,48 @@
-import { Model, DataTypes } from 'sequelize';
-import sequelize from '../config/database.js';
+import { Table, Column, Model, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
 import User from './User.js';
 
+@Table({
+    tableName: 'connections',
+    timestamps: true
+})
 class Connection extends Model {
-    public id!: number;
-    public professionalId!: number;
-    public clientId!: number;
-    public status!: 'PENDING' | 'ACCEPTED' | 'REJECTED';
+    @Column({
+        type: DataType.INTEGER.UNSIGNED,
+        autoIncrement: true,
+        primaryKey: true,
+    })
+    declare id: number;
 
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
+    @ForeignKey(() => User)
+    @Column({
+        type: DataType.INTEGER.UNSIGNED,
+        allowNull: false,
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+    })
+    declare professionalId: number;
+
+    @BelongsTo(() => User, 'professionalId')
+    declare professional: User;
+
+    @ForeignKey(() => User)
+    @Column({
+        type: DataType.INTEGER.UNSIGNED,
+        allowNull: false,
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+    })
+    declare clientId: number;
+
+    @BelongsTo(() => User, 'clientId')
+    declare client: User;
+
+    @Column({
+        type: DataType.ENUM('PENDING', 'ACCEPTED', 'REJECTED'),
+        allowNull: false,
+        defaultValue: 'PENDING',
+    })
+    declare status: 'PENDING' | 'ACCEPTED' | 'REJECTED';
 }
-
-Connection.init(
-    {
-        id: { type: DataTypes.INTEGER.UNSIGNED, autoIncrement: true, primaryKey: true },
-        professionalId: {
-            type: DataTypes.INTEGER.UNSIGNED,
-            allowNull: false,
-            references: {
-                model: User,
-                key: 'id',
-            },
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
-        },
-        clientId: {
-            type: DataTypes.INTEGER.UNSIGNED,
-            allowNull: false,
-            references: {
-                model: User,
-                key: 'id',
-            },
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
-        },
-        status: {
-            type: DataTypes.ENUM('PENDING', 'ACCEPTED', 'REJECTED'),
-            allowNull: false,
-            defaultValue: 'PENDING',
-        },
-    },
-    {
-        sequelize,
-        tableName: 'connections',
-    }
-);
 
 export default Connection;

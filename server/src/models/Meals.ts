@@ -1,52 +1,47 @@
-import { Model, DataTypes } from 'sequelize';
-import sequelize from '../config/database.js';
+import { Table, Column, Model, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
 import Diet from './Diet.js';
 
+@Table({
+    tableName: 'meals',
+    timestamps: true
+})
 class Meals extends Model {
-    public id!: number;
-    public dietId!: number;
-    public timeOfDay!: string;
-    public description!: string;
-    public targetCalories!: number;
+    @Column({
+        type: DataType.INTEGER.UNSIGNED,
+        autoIncrement: true,
+        primaryKey: true,
+    })
+    declare id: number;
 
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
+    @ForeignKey(() => Diet)
+    @Column({
+        type: DataType.INTEGER.UNSIGNED,
+        allowNull: false,
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+    })
+    declare dietId: number;
+
+    @BelongsTo(() => Diet)
+    declare diet: Diet;
+
+    @Column({
+        type: DataType.ENUM('BREAKFAST', 'LUNCH', 'DINNER', 'SNACK'),
+        allowNull: false,
+    })
+    declare timeOfDay: 'BREAKFAST' | 'LUNCH' | 'DINNER' | 'SNACK';
+
+    @Column({
+        type: DataType.STRING,
+        allowNull: false,
+    })
+    declare description: string;
+
+    @Column({
+        type: DataType.INTEGER.UNSIGNED,
+        allowNull: false,
+    })
+    declare targetCalories: number;
 }
-
-Meals.init(
-    {
-        id: {
-            type: DataTypes.INTEGER.UNSIGNED,
-            autoIncrement: true,
-            primaryKey: true,
-        },
-        dietId: {
-            type: DataTypes.INTEGER.UNSIGNED,
-            allowNull: false,
-            references: {
-                model: Diet,
-                key: 'id',
-            },
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
-        },
-        timeOfDay: {
-            type: DataTypes.ENUM('BREAKFAST', 'LUNCH', 'DINNER', 'SNACK'),
-            allowNull: false,
-        },
-        description: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        targetCalories: {
-            type: DataTypes.INTEGER.UNSIGNED,
-            allowNull: false,
-        },
-    },
-    {
-        sequelize,
-        tableName: 'meals',
-    }
-);
 
 export default Meals;

@@ -1,59 +1,54 @@
-import { Model, DataTypes } from 'sequelize';
-import sequelize from '../config/database.js';
+import { Table, Column, Model, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
 import User from './User.js';
 
+@Table({
+    tableName: 'workouts',
+    timestamps: true
+})
 class Workouts extends Model {
-    public id!: number;
-    public clientId!: number;
-    public authorId!: number;
-    public title!: string;
-    public isActive!: boolean;
+    @Column({
+        type: DataType.INTEGER.UNSIGNED,
+        autoIncrement: true,
+        primaryKey: true,
+    })
+    declare id: number;
 
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
+    @ForeignKey(() => User)
+    @Column({
+        type: DataType.INTEGER.UNSIGNED,
+        allowNull: false,
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+    })
+    declare clientId: number;
+
+    @BelongsTo(() => User, 'clientId')
+    declare client: User;
+
+    @ForeignKey(() => User)
+    @Column({
+        type: DataType.INTEGER.UNSIGNED,
+        allowNull: false,
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+    })
+    declare authorId: number;
+
+    @BelongsTo(() => User, 'authorId')
+    declare author: User;
+
+    @Column({
+        type: DataType.STRING,
+        allowNull: false,
+    })
+    declare title: string;
+
+    @Column({
+        type: DataType.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
+    })
+    declare isActive: boolean;
 }
-
-Workouts.init(
-    {
-        id: {
-            type: DataTypes.INTEGER.UNSIGNED,
-            autoIncrement: true,
-            primaryKey: true,
-        },
-        clientId: {
-            type: DataTypes.INTEGER.UNSIGNED,
-            allowNull: false,
-            references: {
-                model: User,
-                key: 'id',
-            },
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
-        },
-        authorId: {
-            type: DataTypes.INTEGER.UNSIGNED,
-            allowNull: false,
-            references: {
-                model: User,
-                key: 'id',
-            },
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
-        },
-        title: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        isActive: {
-            type: DataTypes.BOOLEAN,
-            allowNull: false,
-            defaultValue: true,
-        },
-    },
-    {
-        sequelize,
-        tableName: 'workouts',
-    }
-);
 
 export default Workouts;

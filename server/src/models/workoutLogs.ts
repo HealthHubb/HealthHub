@@ -1,64 +1,60 @@
-import { Model, DataTypes } from 'sequelize';
-import sequelize from '../config/database.js';
+import { Table, Column, Model, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
 import WorkoutRoutine from './WorkoutRoutine.js';
 import User from './User.js';
 
+@Table({
+    tableName: 'workout_logs',
+    timestamps: true
+})
 class WorkoutLogs extends Model {
-    public id!: number;
-    public workoutRoutineId!: number;
-    public userId!: number;
-    public executedAt!: Date;
-    public actualWeight!: number;
-    public notes!: string;
+    @Column({
+        type: DataType.INTEGER.UNSIGNED,
+        autoIncrement: true,
+        primaryKey: true,
+    })
+    declare id: number;
 
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
+    @ForeignKey(() => WorkoutRoutine)
+    @Column({
+        type: DataType.INTEGER.UNSIGNED,
+        allowNull: false,
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+    })
+    declare workoutRoutineId: number;
+
+    @BelongsTo(() => WorkoutRoutine)
+    declare workoutRoutine: WorkoutRoutine;
+
+    @ForeignKey(() => User)
+    @Column({
+        type: DataType.INTEGER.UNSIGNED,
+        allowNull: false,
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+    })
+    declare userId: number;
+
+    @BelongsTo(() => User)
+    declare user: User;
+
+    @Column({
+        type: DataType.DATE,
+        allowNull: false,
+    })
+    declare executedAt: Date;
+
+    @Column({
+        type: DataType.FLOAT,
+        allowNull: false,
+    })
+    declare actualWeight: number;
+
+    @Column({
+        type: DataType.STRING,
+        allowNull: true,
+    })
+    declare notes: string;
 }
 
-WorkoutLogs.init(
-    {
-        id: {
-            type: DataTypes.INTEGER.UNSIGNED,
-            autoIncrement: true,
-            primaryKey: true,
-        },
-        workoutRoutineId: {
-            type: DataTypes.INTEGER.UNSIGNED,
-            allowNull: false,
-            references: {
-                model: WorkoutRoutine,
-                key: 'id',
-            },
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
-        },
-        userId: {
-            type: DataTypes.INTEGER.UNSIGNED,
-            allowNull: false,
-            references: {
-                model: User,
-                key: 'id',
-            },
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
-        },
-        executedAt: {
-            type: DataTypes.DATE,
-            allowNull: false,
-        },
-        actualWeight: {
-            type: DataTypes.FLOAT,
-            allowNull: false,
-        },
-        notes: {
-            type: DataTypes.STRING,
-            allowNull: true,
-        },
-    },
-    {
-        sequelize,
-        tableName: 'workout_logs',
-    },
-);
-
-export default WorkoutLogs; 
+export default WorkoutLogs;

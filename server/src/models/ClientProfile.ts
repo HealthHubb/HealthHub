@@ -1,80 +1,71 @@
-import { Model, DataTypes } from "sequelize";
-import sequelize from "../config/database.js";
-import User from "./User.js";
+import { Table, Column, Model, DataType, ForeignKey, BelongsTo } from 'sequelize-typescript';
+import User from './User.js';
 
+@Table({
+    tableName: 'client_profiles',
+    timestamps: true
+})
 class ClientProfile extends Model {
-  public id!: number;
-  public userId!: number;
-  public birthDate!: Date;
-  public weight!: number;
-  public height!: number;
-  public gender!: string;
-  public activityLevel!: string;
-  public goal!: string;
-  public notes!: string;
-}
+    @Column({
+        type: DataType.INTEGER.UNSIGNED,
+        autoIncrement: true,
+        primaryKey: true,
+    })
+    declare id: number;
 
-ClientProfile.init(
-  {
-    id: {
-      type: DataTypes.INTEGER.UNSIGNED,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    userId: {
-      type: DataTypes.INTEGER.UNSIGNED,
-      allowNull: false,
-      references: {
-        model: User,
-        key: "id",
-      },
-      onDelete: "CASCADE",
-      onUpdate: "CASCADE",
-    },
-    birthDate: {
-      type: DataTypes.DATE,
-      allowNull: false,
-    },
-    weight: {
-      type: DataTypes.FLOAT,
-      allowNull: false,
-    },
-    height: {
-      type: DataTypes.FLOAT,
-      allowNull: false,
-    },
-    gender: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    activityLevel: {
-      type: DataTypes.ENUM(
-        "SEDENTARY",
-        "LIGHT",
-        "MODERATE",
-        "HIGH",
-        "VERY_HIGH"
-      ),
-      allowNull: false,
-    },
-    goal: {
-      type: DataTypes.ENUM(
-        "WEIGHT_LOSS",
-        "WEIGHT_GAIN",
-        "MAINTENANCE",
-        "HEALTH"
-      ),
-      allowNull: false,
-    },
-    notes: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-    },
-  },
-  {
-    sequelize,
-    tableName: "client_profiles",
-  }
-);
+    @ForeignKey(() => User)
+    @Column({
+        type: DataType.INTEGER.UNSIGNED,
+        allowNull: false,
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+    })
+    declare userId: number;
+
+    @BelongsTo(() => User)
+    declare user: User;
+
+    @Column({
+        type: DataType.DATE,
+        allowNull: false,
+    })
+    declare birthDate: Date;
+
+    @Column({
+        type: DataType.FLOAT,
+        allowNull: false,
+    })
+    declare weight: number;
+
+    @Column({
+        type: DataType.FLOAT,
+        allowNull: false,
+    })
+    declare height: number;
+
+    @Column({
+        type: DataType.STRING,
+        allowNull: false,
+    })
+    declare gender: string;
+
+    @Column({
+        type: DataType.ENUM('SEDENTARY', 'LIGHT', 'MODERATE', 'HIGH', 'VERY_HIGH'),
+        allowNull: false,
+    })
+    declare activityLevel: string;
+
+    @Column({
+        type: DataType.ENUM('WEIGHT_LOSS', 'WEIGHT_GAIN', 'MAINTENANCE', 'HEALTH'),
+        allowNull: false,
+    })
+    declare goal: string;
+
+    @Column({
+        type: DataType.TEXT,
+        allowNull: true,
+    })
+    declare notes: string;
+}
 
 export default ClientProfile;
