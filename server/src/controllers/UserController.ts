@@ -6,10 +6,10 @@ interface CreateUserBody {
     name: string;
     email: string;
     password: string;
-    role: 'CLIENT' | 'PROFESSIONAL';
+    role?: 'CLIENT' | 'PROFESSIONAL';
 }
 
-interface UpdateUserBody {
+export interface UpdateUserBody {
     name?: string;
     email?: string;
     password?: string;

@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import Fastify from "fastify";
+import fastifyJwt from "@fastify/jwt";
 import sequelize from "./config/database.js";
 import ClientProfile from "./models/ClientProfile.js";
 import ProfessionalProfile from "./models/ProfessionalProfile.js";
@@ -12,10 +13,20 @@ import Workouts from "./models/Workouts.js";
 import WorkoutRoutine from "./models/WorkoutRoutine.js";
 import WorkoutLogs from "./models/workoutLogs.js";
 import { userRoutes } from "./routes/userRoutes.js";
+import dotenv from "dotenv";
+import { authRoutes } from './routes/authRotutes.js';
+
+dotenv.config();
 
 const app = Fastify({
   logger: true,
 });
+
+app.register(fastifyJwt, {
+  secret: process.env.JWT_SECRET || 'supersecret'
+});
+
+app.register(authRoutes, { prefix: '/auth' });
 
 app.get("/ping", async (request, reply) => {
   return { status: "ok", message: "healthhub server is running" };
@@ -52,5 +63,7 @@ const start = async () => {
     process.exit(1);
   }
 };
+
+export {app};
 
 start();
