@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import Fastify from "fastify";
 import fastifyJwt from "@fastify/jwt";
+import fastifyCors from "@fastify/cors";
 import sequelize from "./config/database.js";
 import ClientProfile from "./models/ClientProfile.js";
 import ProfessionalProfile from "./models/ProfessionalProfile.js";
@@ -20,6 +21,11 @@ dotenv.config();
 
 const app = Fastify({
   logger: true,
+});
+
+app.register(fastifyCors, {
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
 });
 
 app.register(fastifyJwt, {
